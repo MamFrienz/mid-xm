@@ -1,0 +1,65 @@
+var cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')):{
+  items: [],
+  total: 0
+};
+
+localStorage.setItem('cart',JSON.stringify(cart));
+
+
+$(document).ready(function(){
+    
+    $('#itemNo').text(cart.items.length);
+    
+   
+    products.forEach(function(product, index){
+      var colDiv = $('<div>').addClass('col-md-4');
+      
+     
+     
+     
+     var cardDiv = $('<div>').addClass('card');
+     
+      
+      var prodImg = $('<img>').addClass('card-img-top');
+     
+      prodImg.attr('src', product.image);
+      cardDiv.append(prodImg);
+      
+      var cardBody = $('<div>').addClass('card-body');
+      cardDiv.append(cardBody);
+      
+      
+      var productTitle = $('<h5>').addClass('carf-title').text(product.name); 
+      cardBody.append(productTitle);
+      
+      
+      var produtPrice = $('<p>').addClass('card-text').text("$" + product.price);
+      cardBody.append(produtPrice);
+      // var cardTitle = $('<h5>').addClass('card-title');
+      // var cardText = $('<p>').addClass('card-text');
+      
+     
+     
+      var addtoCartbtn = $('<button>').addClass('btn btn-primary').text('Add to Cart').attr('id', index);
+      cardBody.append(addtoCartbtn);
+      
+      addtoCartbtn.click(function(event){
+        
+        
+        var cartItem = products[event.target.id];
+        cartItem.quantity = 1;
+        cart.items.push(cartItem);
+        $('#itemNo').text(cart.items.length);
+        localStorage.setItem('cart',JSON.stringify(cart));
+      });
+      
+     
+      
+      cardDiv.append(cardBody);
+      
+      
+      colDiv.append(cardDiv);
+      
+      $('#prod-row').append(colDiv);
+    });
+    
